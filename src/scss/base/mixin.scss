@@ -1,0 +1,30 @@
+@mixin dark {
+    @media(prefers-color-scheme: dark){
+        @content;
+    }
+}
+
+@mixin light {
+    @media(prefers-color-scheme: light){
+        @content;
+    }
+}
+
+@mixin textOverflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@mixin placeholder {
+    ::-webkit-input-placeholder {@content}
+    :-moz-placeholder           {@content}
+    ::-moz-placeholder          {@content}
+    :-ms-input-placeholder      {@content}  
+}
+
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+    content: $content;
+    display: $display;
+    position: $pos;
+}

@@ -1,0 +1,166 @@
+.main__list{
+    flex-grow: 1;
+    overflow-y: auto;
+    list-style-type: none;
+    position: relative;
+
+    .task.completed{
+        .circle-outside{
+            border-color: var(--accent);
+        }
+        .circle-inside{
+            width: 10px;
+            height: 10px;
+        }
+        .task-text{
+            opacity: 0.3;
+        }
+    }
+
+    .task.uncompleted{
+        .circle-inside{
+            width: 0px;
+            height: 0px;
+        }
+        .task-text,
+        .task-link{
+            opacity: 1; 
+        }
+    }
+
+
+    .task.show{
+        animation: taskShow 0.15s ease-in 1;
+    }
+
+    .task.hide{
+        z-index: -1;
+        opacity: 0;
+    }
+
+    .task{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 6px 0px 7px 18px;
+        position: relative;
+        z-index: 1;
+        outline: none;
+        transition: 0.2s;
+        &:hover{
+            .task-delete{
+                opacity: 1;
+                pointer-events: inherit;
+            }
+        }
+        &::after{
+            @include pseudo;
+            height: 1px;
+            bottom: 0;
+            left: 50px;
+            right: 0px;
+            background: $border-color
+        }
+        &:focus{ 
+            .task__focus{
+                background: $task-focus-bg;
+                pointer-events: none;
+                z-index: -1;
+            }
+        }
+        input{
+            width: 0px;
+            height: 0px;
+            overflow: hidden;
+            opacity: 0;
+            &:active ~ .task__focus{
+                background: none;
+            }
+        }
+        label{
+            display: block;
+            width: 18px;
+            height: 18px;
+            margin-right: 14px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        &__focus{
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            transition: 0.1s;
+        }
+
+        &-text,
+        &-link{
+            display: inline-block;
+            padding: 3px 50px 2px 2px;
+            font-size: 14px;
+            color: $text-color;
+            outline: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -moz-box;
+            -moz-box-orient: vertical;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            line-clamp: 3;
+            box-orient: vertical;
+
+        }
+        &-link{
+            color: $link-color;
+        }
+        &-text{
+            cursor: text;
+        }
+
+        &-delete{
+            position: absolute;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            opacity: 0;
+            pointer-events: none;
+            svg{
+                width: 15px;
+                height: 15px;
+                fill: var(--accent);
+            }
+        }
+        .circle-outside{
+            min-width: 18px;
+            min-height: 18px;
+            border: 1px solid $task-checkbox-border;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .circle-inside{
+            display: block;
+            width: 0px; 
+            height: 0px; 
+            background: var(--accent);
+            border-radius: 50%;
+        
+            transform-origin: center;
+            transition: $ft-transition;
+        }
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    .main__list{
+        .task{
+            &-delete{
+                opacity: 1;
+            }
+        }
+    }
+}

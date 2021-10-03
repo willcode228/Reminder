@@ -1,0 +1,208 @@
+.property{
+    width: 450px;
+    min-height: 145px;
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    background: $main-bg;
+    &__content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__title{
+        font-size: 13px;
+        margin-bottom: 16px;
+        @include textOverflow;
+    }
+    &__img{
+        border-radius: 50%;
+        margin-right: 18px;
+        position: relative;
+        box-shadow: 0px 0px 10px 0px rgb($black, .4);
+    }
+    &__checkboxes.active{
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+    &__checkboxes{
+        width: 255px;
+        min-height: 90px;
+        padding: 15px;
+        position: absolute;
+        left: 110%;
+        top: 50%;
+        z-index: 1;
+        background: #373737;
+        border-radius: $main-radius;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(-200%);
+        transition: 0.3s;
+        &-triangle{
+            border: 10px solid transparent; 
+            border-right: 10px solid #373737;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 100%;
+        }
+        .color-label{
+            display: block;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            position: relative;
+            &::before{
+                @include pseudo;
+                width: 36px;
+                height: 36px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                border: 1px solid #7c7c7c;
+                opacity: 0;
+                transition: 0.2s;
+            }
+        }
+
+        .color-input{
+            width: 0px;
+            height: 0px;
+            display: none;
+            &:checked + .color-label::before{
+                width: 36px;
+                height: 36px;
+                opacity: 1;
+            }
+        }
+
+    }
+    &__circle{
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        max-width: 60px;
+        min-width: 60px;
+        aspect-ratio: 1;
+        background: var(--accent);
+        display: flex;
+        cursor: pointer;
+        transition: 0.1s;
+        &:hover{
+            .arrow__overlay{
+                opacity: 1;
+            }
+        }
+        .arrow__overlay{
+            width: 100%;
+            min-height: 20px;
+            background: linear-gradient(rgba($black, 0), rgba($black, 0.8));
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            transition: 0.1s;
+            color: $white
+        }
+        .arrow{
+            font-size: 12px;
+        }
+        svg{
+            margin: auto;
+            fill: $white;
+            width: 50%;
+            height: 50%;
+        }
+    }
+    &__text{
+        max-width: 80%;
+        flex-grow: 1;
+    }
+    &__form{
+        display: flex;
+        align-items: center;
+    }
+    &__input-name{
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    .input__wrapper{
+        flex-grow: 1;
+        input{
+            height: 100%;
+            padding: 3px;
+            line-height: 18px;
+            background: transparent;
+            border: none;
+            border-radius: 0px;
+            cursor: default;
+            width: 100%;
+            @include textOverflow;
+            &:focus{
+                box-shadow: none;
+            }
+            &:focus ~ .outline{
+                opacity: 1;
+                animation: none;
+            }
+        }
+        
+        .outline{
+            opacity: 1;
+            border-radius: 3px;
+        }
+
+    }
+    &__btngroup{
+        margin-top: 30px;
+        display: flex;
+        justify-content: flex-end;
+        button{
+            height: 20px;
+            line-height: 20px;
+        }
+        button.accent{
+            margin-left: 10px;
+        }
+    }
+}
+
+@include light{
+    .property{
+        background: #ECECEC;
+        &__checkboxes{
+            background: $white;
+            &-triangle{
+                border-right: 10px solid $white;
+            }
+        }
+        
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .property{
+        width: 95%;
+        &__checkboxes{
+            width: 200px;
+        }
+        &__circle{
+            max-width: 40px;
+            min-width: 40px;
+        }
+        .arrow__overlay{
+            min-height: 10px;
+        }
+    }
+}

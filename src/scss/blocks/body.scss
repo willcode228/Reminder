@@ -1,0 +1,140 @@
+.app{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    &__aside,
+    &__main{
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+    .aside-open{
+        display: none;
+        position: absolute;
+        top: 9px;
+        left: 12px;
+        color: $light-text-color;
+        z-index: 99999;
+        width: 28px;
+        height: 28px;
+        border-radius: $main-radius;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 18px;
+        &::before{
+            content: '→';
+        }
+        &:hover{
+            background: $add-btn-bg;
+        }
+    }
+    .aside-open.active{
+        &::before{
+            content: '←';
+        }
+        &:hover{
+            background: rgba($add-btn-bg, 0.5);
+        }
+    }
+    &__aside{
+        width: 280px;
+        max-width: 280px;
+        padding: 52px 0px 25px 0px;
+        background: $aside-bg;
+    }
+    &__main{
+        z-index: 9;
+        max-width: calc(100% - 280px);
+        flex-grow: 1;
+        background: $main-bg;
+        position: relative;
+    }
+    .main{
+        --accent: var(--blue);
+        &__notSelected{
+            user-select: none;
+            text-align: center;
+            line-height: 100vh;
+            color: $light-text-color;
+            font-weight: 400;
+        }
+        &__noTasks{
+            text-align: center;
+            user-select: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: $light-text-color;
+            font-weight: 400;
+            opacity: 0;
+            transition: 0.1s;
+        }
+        &__noTasks.active{
+            opacity: 1;
+        }
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .app{
+        &__aside{
+            max-width: 195px;
+        }
+        &__main{
+            max-width: calc(100% - 195px);
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .app{
+        .aside-open{
+            display: flex;
+        }
+
+        &__aside.aside{
+            position: absolute;
+            width: 100vw;
+            max-width: 100%;
+            inset: 0;
+            z-index: 99;
+            left: -110%;
+            transition: 0.3s;
+        }
+        &__aside.aside.active{
+            left: 0;
+        }
+        &__main{
+            max-width: 100%;
+        }
+        .main{
+            box-shadow: none;
+            border-left: none;
+            &__notSelected,
+            &__noTasks{
+                font-size: 25px;
+            }
+        }
+    }
+}
+
+
+@include light{
+    .main{
+        border-left: none;
+        box-shadow: -2px 0px 1px -1px #e0e0e0;
+    }
+}
+
+@include dark{
+    .main{
+        box-shadow: none;
+        border-left: 1px solid #000;
+    }
+}
+

@@ -1,0 +1,21 @@
+.infoModal{
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    background: rgba($black, 0.3);
+    z-index: 999;
+    transform: translateX(-50%) translateY(-40px) scale(0);
+    transform-origin: top;
+    transition: 0.3s;
+    text-align: center;
+    h3{
+        color: $white;
+        font-weight: 400;
+        padding: 10px 20px;
+    }
+}
+
+.infoModal.active{
+    transform: translateX(-50%) translateY(0px) scale(1);
+}
+

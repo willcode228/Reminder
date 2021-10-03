@@ -1,0 +1,65 @@
+.aside{
+    position: relative;
+    overflow: hidden;
+    &__icon{
+        margin-right: 8px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        border: 1px solid $add-btn-aside;
+        box-sizing: initial;
+        text-align: center;
+        line-height: 12px;
+        font-size: 13px;
+    }
+    &__new{
+        font-size: 13px;
+        font-weight: 400;
+    }
+    &__add:active{
+        color: $add-btn-aside-active;
+        .aside__icon{
+            border-color: $add-btn-aside-active;
+        }
+    }
+    &__add{
+        user-select: none;
+        border-top: 0.5px solid $border-color;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        background: $aside-bg;
+        color: $add-btn-aside;
+        z-index: 1;
+        &:focus-visible{
+            border-top: 1px solid $outline-color;
+            color: $outline-color;
+            .aside__icon{
+                border-color: $outline-color;
+            }
+        }
+    }
+}
+
+
+@include light{
+    .aside{
+        &__add{
+            border-top: none;
+            box-shadow: 0px -2px 1px -1px #e0e0e0;
+        }
+    }
+}
+
+@include dark{
+    .aside{
+        &__add{
+            box-shadow: none;
+            border-top: 1px solid #000;
+        }
+    }
+}
