@@ -67,6 +67,18 @@ export const delTask = (bllIndex, taskIndex, type) => {
     mainRollRemove(taskIndex, type);
 }
 
+export const dragTask = (oldTaskObj, newBllIndex) => {
+    const {oldTaskId, oldTaskType, oldBllIndex} = oldTaskObj;
+
+    if(oldBllIndex === newBllIndex) return;
+
+    const {str, isCompleted} = bll[oldBllIndex].template[oldTaskType][oldTaskId];
+    const completedStatus = isCompleted ? 'completed' : 'uncompleted';
+
+    delTask(oldBllIndex, oldTaskId, oldTaskType);
+    addTask(newBllIndex, str, completedStatus);
+}
+
 export const changeTaskStatus = (bllIndex, taskIndex, type, reverseType) => {
     let text = bll[bllIndex].template[type][taskIndex].str;
     delTask(bllIndex, taskIndex, type);

@@ -54,8 +54,9 @@ class MainRollKey extends ListKey{
     }
 
     copy(e) {
-        console.log(e.target)
-        const element = document.activeElement.closest('.main__list-task');
+        console.log(e)
+        const element = e.target.closest('.main__list-task');
+
         if(!element) return;
 
         let [index, type] = this.taskInfo(element);

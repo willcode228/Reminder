@@ -13,6 +13,31 @@ class MainRollRep extends ListRep {
         this._el.addEventListener('mousedown', this.textFocus.bind(this));
         this._el.addEventListener('focusout', this.textBlur.bind(this));
         this._el.addEventListener('input', this.rename.bind(this));
+
+        this._el.addEventListener('dragstart', this.dragTaskStart.bind(this));
+        this._el.addEventListener('dragend', this.dragTaskEnd.bind(this));
+    }
+
+    dragTaskStart(e) {
+        let element = e.target;
+        if(!element.classList.contains('main__list-task')) return;
+
+        let [taskIndex, type, reverseType] = this.taskInfo(element);
+
+        const oldTaskInfo = {
+            oldTaskId: taskIndex,
+            oldTaskType: type,
+            oldBllIndex: this.bllIndex
+        }
+
+        e.dataTransfer.setData("text/plain", JSON.stringify(oldTaskInfo));
+        this.update();
+    }
+
+    dragTaskEnd(e) {
+        let element = e.target;
+        if(!element.classList.contains('main__list-task')) return;
+        this.update();
     }
 
     trash(e) {

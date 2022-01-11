@@ -1,4 +1,4 @@
-import { delTab, renameTab } from "../../../asset/bll";
+import { delTab, dragTask, renameTab } from "../../../asset/bll";
 import ListRep from "../../extends/listrep";
 import Main from "../../main/main";
 import DelTabPrompt from "./deltabprompt";
@@ -16,6 +16,24 @@ class AsideRollRep extends ListRep{
         this._el.addEventListener('input', this.rename.bind(this));
         this._el.addEventListener('dblclick', this.openPropertyModal.bind(this));
         this._el.addEventListener('click', this.trash.bind(this));
+
+        this._el.addEventListener('drop', this.dropTask.bind(this));
+        this._el.addEventListener('dragover', this.dragPrevent.bind(this));
+        this._el.addEventListener('dragenter', this.dragPrevent.bind(this));
+
+    }
+
+    dragPrevent(e) {
+        e.preventDefault();
+    }
+
+    dropTask(e) {
+        const tab = e.target.closest('.aside__list-item'),
+            oldTaskObj = JSON.parse(e.dataTransfer.getData("text/plain")),
+            newBllId = tab.getAttribute('data-counter');
+
+        dragTask(oldTaskObj, newBllId);
+        this.taskListRender('is');
     }
 
     trash(e) {

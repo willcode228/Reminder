@@ -139,7 +139,8 @@ export const task = (index, text, animated = false, completed = false) => {
     return (`
         <li data-${completedStatus}="${index}"
             class="main__list-task task ${animatedStatus} ${completedStatus}"
-            tabindex="-1">
+            tabindex="-1"
+            draggable="true">
 
             <label class="main__list-label" 
                     for="${completedStatus}-checkbox${index}">
