@@ -61,7 +61,7 @@
         transition: 0.15s;
         &:focus-within,
         &:focus{
-            background: #1068DE;
+            background: $tab-focus-bg;
             .aside__list-input{
                 color: $white;
                 &:focus{
@@ -130,12 +130,6 @@
                     color: $white;
                     background: $black;
                 }
-            }
-        }
-        &-item{
-            &:focus-within,
-            &:focus{
-                background: #0E51CE;
             }
         }
         &-input:focus{

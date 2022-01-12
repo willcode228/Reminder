@@ -23,6 +23,8 @@
 
 
         --scrollbar-thumb-bg: #B8B8B8;
+        
+        --tab-focus-bg: #0E51CE;
     }
 }
 
@@ -52,6 +54,7 @@
 
         --scrollbar-thumb-bg: #B6B6B6;
 
+        --tab-focus-bg: #1068DE;
     }
 }
 
@@ -78,6 +81,8 @@ $aside-bg: var(--aside-bg);
 $main-bg: var(--main-bg);
 
 $box-bg: var(--box-bg);
+
+$tab-focus-bg: var(--tab-focus-bg);
 
 $search-bg: var(--search-input);
 $outline-color: var(--outline-color);

@@ -68,14 +68,14 @@ export const delTask = (bllIndex, taskIndex, type) => {
 }
 
 export const dragTask = (oldTaskObj, newBllIndex) => {
-    const {oldTaskId, oldTaskType, oldBllIndex} = oldTaskObj;
+    const {taskId, taskType, oldBllIndex} = oldTaskObj;
 
     if(oldBllIndex === newBllIndex) return;
 
-    const {str, isCompleted} = bll[oldBllIndex].template[oldTaskType][oldTaskId];
+    const {str, isCompleted} = bll[oldBllIndex].template[taskType][taskId];
     const completedStatus = isCompleted ? 'completed' : 'uncompleted';
 
-    delTask(oldBllIndex, oldTaskId, oldTaskType);
+    delTask(oldBllIndex, taskId, taskType);
     addTask(newBllIndex, str, completedStatus);
 }
 

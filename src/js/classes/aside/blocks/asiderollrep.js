@@ -18,13 +18,31 @@ class AsideRollRep extends ListRep{
         this._el.addEventListener('click', this.trash.bind(this));
 
         this._el.addEventListener('drop', this.dropTask.bind(this));
-        this._el.addEventListener('dragover', this.dragPrevent.bind(this));
+
+        this._el.addEventListener('dragover', this.dragTaskOverTab.bind(this));
         this._el.addEventListener('dragenter', this.dragPrevent.bind(this));
+        this._el.addEventListener('dragleave', this.leaveDrag.bind(this));
 
     }
 
-    dragPrevent(e) {
-        e.preventDefault();
+    dragPrevent(e) { e.preventDefault(); }
+
+    dragTaskOverTab(e) {
+        this.dragPrevent(e);
+        const tab = e.target.closest('.aside__list-item');
+
+        if(!tab) return;
+
+        tab.style.background = 'var(--tab-focus-bg)';
+    }
+
+    leaveDrag(e) {
+        this.dragPrevent(e);
+        const tab = e.target.closest('.aside__list-item');
+
+        if(!tab) return;
+
+        tab.style.background = '';
     }
 
     dropTask(e) {
@@ -33,7 +51,7 @@ class AsideRollRep extends ListRep{
             newBllId = tab.getAttribute('data-counter');
 
         dragTask(oldTaskObj, newBllId);
-        this.taskListRender('is');
+        this.taskListRender('drop');
     }
 
     trash(e) {
