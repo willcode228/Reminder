@@ -44,7 +44,7 @@ export const renameTab = (index, text) => {
 }
 
 export const addTask = (bllIndex, text='', type='uncompleted') => {
-    let completedStatus = type == 'completed' ? true : false;
+    let completedStatus = type === 'completed';
 
     let newTask = {str: text, completed: completedStatus},
         data = bll[bllIndex].template[type];
@@ -54,9 +54,9 @@ export const addTask = (bllIndex, text='', type='uncompleted') => {
 
     toStorage(bll);
 
-    //if complete task visible is false and we change uncompleted task to completed
+    //if complete task visible is false, and we change uncompleted task to completed
     //we mustn't add this new completed task to html only to bll
-    if(!bll[bllIndex].completeTaskVisible && type == 'completed') return;
+    if(!bll[bllIndex].completeTaskVisible && type === 'completed') return;
     mainRollAdd(index, text, completedStatus);
 }
 
@@ -72,11 +72,10 @@ export const dragTask = (oldTaskObj, newBllIndex) => {
 
     if(oldBllIndex === newBllIndex) return;
 
-    const {str, isCompleted} = bll[oldBllIndex].template[taskType][taskId];
-    const completedStatus = isCompleted ? 'completed' : 'uncompleted';
+    const {str} = bll[oldBllIndex].template[taskType][taskId];
 
     delTask(oldBllIndex, taskId, taskType);
-    addTask(newBllIndex, str, completedStatus);
+    addTask(newBllIndex, str, taskType);
 }
 
 export const changeTaskStatus = (bllIndex, taskIndex, type, reverseType) => {
@@ -106,7 +105,7 @@ const toStorage = (data) => {
 }
 
 const lastObjIndex = (obj) => {
-    let keys = Object.keys(obj);
+    let keys = Object.keys(obj).map(Number);
     return keys.length ? Math.max(...keys) + 1 : 0;
 }
 

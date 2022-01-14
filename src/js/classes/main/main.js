@@ -5,6 +5,7 @@ import MainRollView from "./blocks/mainrollview";
 import MainRollRep from "./blocks/mainrollrep";
 import AsideRollView from "../aside/blocks/asiderollview";
 import MainRollKey from "./blocks/mainrollkey";
+import MainRollDrag from './blocks/mainrolldrag';
 
 class Main extends Block{
     constructor(selector, data, index) {
@@ -49,6 +50,7 @@ class Main extends Block{
         roll.noteUpdate(this.localeData);
         
         const mainEvent = new MainRollRep('.main__list', this.index, mainDataUpdate);
+        new MainRollDrag('.main__list', this.index, mainDataUpdate);
         new MainRollKey('.main__list', this.data[this.index], this.index, mainDataUpdate, delTaskUpdate);
     } 
     

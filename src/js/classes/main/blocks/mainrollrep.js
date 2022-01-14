@@ -1,7 +1,7 @@
 import { changeTaskStatus, delTask, renameTask } from "../../../asset/bll";
-import { isDarkTheme } from '../../../utils/isDarkTheme';
 import { taskLink } from "../../../utils/template";
 import ListRep from "../../extends/listrep";
+import { taskInfo } from '../../../utils/taskInfo';
 
 class MainRollRep extends ListRep {
     constructor(selector, index, mainDataUpdate) {
@@ -14,33 +14,6 @@ class MainRollRep extends ListRep {
         this._el.addEventListener('mousedown', this.textFocus.bind(this));
         this._el.addEventListener('focusout', this.textBlur.bind(this));
         this._el.addEventListener('input', this.rename.bind(this));
-
-        this._el.addEventListener('dragstart', this.dragTaskStart.bind(this));
-        this._el.addEventListener('dragend', this.dragTaskEnd.bind(this));
-    }
-
-    dragTaskStart(e) {
-        let element = e.target;
-        if (!element.classList.contains('main__list-task')) return;
-
-        this.dragStartImg(e);
-        let [taskId, taskType] = this.taskInfo(element);
-
-        const oldTaskInfo = { taskId, taskType, oldBllIndex: this.bllIndex};
-        e.dataTransfer.setData("text/plain", JSON.stringify(oldTaskInfo));
-        this.update();
-    }
-
-    dragTaskEnd(e) {
-        let element = e.target;
-        if (!element.classList.contains('main__list-task')) return;
-        this.update();
-    }
-
-    dragStartImg(e) {
-        let img = new Image();
-        img.src = isDarkTheme() ? 'dragFrameDark.f18f19dc.svg' : 'dragFrameLight.cf894adc.svg';
-        e.dataTransfer.setDragImage(img, 18, 13);
     }
 
     trash(e) {
@@ -79,7 +52,7 @@ class MainRollRep extends ListRep {
     delete(element) {
         if (!element.classList.contains('main__list-task')) return;
 
-        let [taskIndex, type] = this.taskInfo(element);
+        let [taskIndex, type] = taskInfo(element);
         delTask(this.bllIndex, taskIndex, type);
         this.focus(element, this.focusDirection(element));
         this.update();
@@ -89,7 +62,7 @@ class MainRollRep extends ListRep {
         const element = e.target;
 
         if (!element.classList.contains('task-text')) return;
-        let [taskIndex, type] = this.taskInfo(element.closest('li'));
+        let [taskIndex, type] = taskInfo(element.closest('li'));
 
         renameTask(this.bllIndex, taskIndex, type, element.textContent);
         element.setAttribute('title', element.textContent);
@@ -101,7 +74,7 @@ class MainRollRep extends ListRep {
         if (!element.classList.contains('task__checkbox')) return;
 
         let task = element.closest('li');
-        let [taskIndex, type, reverseType] = this.taskInfo(task);
+        let [taskIndex, type, reverseType] = taskInfo(task);
 
         task.classList.remove(type);
         task.classList.add(reverseType);
